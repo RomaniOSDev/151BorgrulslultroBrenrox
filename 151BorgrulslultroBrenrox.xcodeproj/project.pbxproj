@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3003F3972FBC70490058EE20 /* OneSignalFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 3003F3962FBC70490058EE20 /* OneSignalFramework */; };
+		3003F3A62FBC855C0058EE20 /* OneSignalBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F39F2FBC855C0058EE20 /* OneSignalBootstrap.swift */; };
+		3003F3A72FBC855C0058EE20 /* InstallationIdentifierStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F39A2FBC855C0058EE20 /* InstallationIdentifierStore.swift */; };
+		3003F3A82FBC855C0058EE20 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F39D2FBC855C0058EE20 /* LoadingView.swift */; };
+		3003F3A92FBC855C0058EE20 /* LoadingFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F39C2FBC855C0058EE20 /* LoadingFlowViewModel.swift */; };
+		3003F3AA2FBC855C0058EE20 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F39E2FBC855C0058EE20 /* NetworkReachability.swift */; };
+		3003F3AB2FBC855C0058EE20 /* RemoteGateDecisionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F3A02FBC855C0058EE20 /* RemoteGateDecisionStore.swift */; };
+		3003F3AC2FBC855C0058EE20 /* RemoteGateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F3A12FBC855C0058EE20 /* RemoteGateService.swift */; };
+		3003F3AD2FBC855C0058EE20 /* AppGateRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F3982FBC855C0058EE20 /* AppGateRootView.swift */; };
+		3003F3AE2FBC855C0058EE20 /* WebviewVCRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F3A42FBC855C0058EE20 /* WebviewVCRepresentable.swift */; };
+		3003F3AF2FBC855C0058EE20 /* WebviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F3A32FBC855C0058EE20 /* WebviewVC.swift */; };
+		3003F3B02FBC855C0058EE20 /* LoadingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F39B2FBC855C0058EE20 /* LoadingConfig.swift */; };
+		3003F3B12FBC855C0058EE20 /* URLAppendingUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F3A22FBC855C0058EE20 /* URLAppendingUUID.swift */; };
+		3003F3B22FBC855C0058EE20 /* DeviceQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003F3992FBC855C0058EE20 /* DeviceQueryParameters.swift */; };
 		305A63E32FB3A9DF00067722 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 305A63DA2FB3A9DF00067722 /* Assets.xcassets */; };
 		305A63E52FB3A9DF00067722 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 305A63DD2FB3A9DF00067722 /* LaunchScreen.storyboard */; };
 		305A63E62FB3A9DF00067722 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 305A63DF2FB3A9DF00067722 /* Main.storyboard */; };
@@ -47,6 +61,20 @@
 
 /* Begin PBXFileReference section */
 		0740AA585C87EDA3AB9CEB27 /* Pods_151BorgrulslultroBrenrox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_151BorgrulslultroBrenrox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3003F3982FBC855C0058EE20 /* AppGateRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGateRootView.swift; sourceTree = "<group>"; };
+		3003F3992FBC855C0058EE20 /* DeviceQueryParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceQueryParameters.swift; sourceTree = "<group>"; };
+		3003F39A2FBC855C0058EE20 /* InstallationIdentifierStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationIdentifierStore.swift; sourceTree = "<group>"; };
+		3003F39B2FBC855C0058EE20 /* LoadingConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingConfig.swift; sourceTree = "<group>"; };
+		3003F39C2FBC855C0058EE20 /* LoadingFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFlowViewModel.swift; sourceTree = "<group>"; };
+		3003F39D2FBC855C0058EE20 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		3003F39E2FBC855C0058EE20 /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
+		3003F39F2FBC855C0058EE20 /* OneSignalBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneSignalBootstrap.swift; sourceTree = "<group>"; };
+		3003F3A02FBC855C0058EE20 /* RemoteGateDecisionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteGateDecisionStore.swift; sourceTree = "<group>"; };
+		3003F3A12FBC855C0058EE20 /* RemoteGateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteGateService.swift; sourceTree = "<group>"; };
+		3003F3A22FBC855C0058EE20 /* URLAppendingUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAppendingUUID.swift; sourceTree = "<group>"; };
+		3003F3A32FBC855C0058EE20 /* WebviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewVC.swift; sourceTree = "<group>"; };
+		3003F3A42FBC855C0058EE20 /* WebviewVCRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewVCRepresentable.swift; sourceTree = "<group>"; };
+		3003F3B32FBC86410058EE20 /* 151BorgrulslultroBrenrox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = 151BorgrulslultroBrenrox.entitlements; sourceTree = "<group>"; };
 		305A5FF52FB37ABC00067722 /* 151BorgrulslultroBrenrox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 151BorgrulslultroBrenrox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305A63A32FB3A9DF00067722 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		305A63A52FB3A9DF00067722 /* AppStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorage.swift; sourceTree = "<group>"; };
@@ -94,12 +122,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3003F3972FBC70490058EE20 /* OneSignalFramework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3003F3A52FBC855C0058EE20 /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				3003F3982FBC855C0058EE20 /* AppGateRootView.swift */,
+				3003F3992FBC855C0058EE20 /* DeviceQueryParameters.swift */,
+				3003F39A2FBC855C0058EE20 /* InstallationIdentifierStore.swift */,
+				3003F39B2FBC855C0058EE20 /* LoadingConfig.swift */,
+				3003F39C2FBC855C0058EE20 /* LoadingFlowViewModel.swift */,
+				3003F39D2FBC855C0058EE20 /* LoadingView.swift */,
+				3003F39E2FBC855C0058EE20 /* NetworkReachability.swift */,
+				3003F39F2FBC855C0058EE20 /* OneSignalBootstrap.swift */,
+				3003F3A02FBC855C0058EE20 /* RemoteGateDecisionStore.swift */,
+				3003F3A12FBC855C0058EE20 /* RemoteGateService.swift */,
+				3003F3A22FBC855C0058EE20 /* URLAppendingUUID.swift */,
+				3003F3A32FBC855C0058EE20 /* WebviewVC.swift */,
+				3003F3A42FBC855C0058EE20 /* WebviewVCRepresentable.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
 		305A5FEC2FB37ABC00067722 = {
 			isa = PBXGroup;
 			children = (
@@ -339,6 +388,7 @@
 		305A63E22FB3A9DF00067722 /* 151BorgrulslultroBrenrox */ = {
 			isa = PBXGroup;
 			children = (
+				3003F3B32FBC86410058EE20 /* 151BorgrulslultroBrenrox.entitlements */,
 				305A63A42FB3A9DF00067722 /* App */,
 				305A63AD2FB3A9DF00067722 /* Core */,
 				305A63AF2FB3A9DF00067722 /* Design */,
@@ -350,6 +400,7 @@
 				305A63DF2FB3A9DF00067722 /* Main.storyboard */,
 				305A63E02FB3A9DF00067722 /* SceneDelegate.swift */,
 				305A63E12FB3A9DF00067722 /* ViewController.swift */,
+				3003F3A52FBC855C0058EE20 /* Loading */,
 			);
 			path = 151BorgrulslultroBrenrox;
 			sourceTree = "<group>";
@@ -416,6 +467,9 @@
 				Base,
 			);
 			mainGroup = 305A5FEC2FB37ABC00067722;
+			packageReferences = (
+				3003F3952FBC70490058EE20 /* XCRemoteSwiftPackageReference "OneSignal-iOS-SDK" */,
+			);
 			productRefGroup = 305A5FF62FB37ABC00067722 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -473,6 +527,19 @@
 				305A63E92FB3A9DF00067722 /* CultureTipsProvider.swift in Sources */,
 				305A63EA2FB3A9DF00067722 /* TabCoordinator.swift in Sources */,
 				305A63EB2FB3A9DF00067722 /* AppNotifications.swift in Sources */,
+				3003F3A62FBC855C0058EE20 /* OneSignalBootstrap.swift in Sources */,
+				3003F3A72FBC855C0058EE20 /* InstallationIdentifierStore.swift in Sources */,
+				3003F3A82FBC855C0058EE20 /* LoadingView.swift in Sources */,
+				3003F3A92FBC855C0058EE20 /* LoadingFlowViewModel.swift in Sources */,
+				3003F3AA2FBC855C0058EE20 /* NetworkReachability.swift in Sources */,
+				3003F3AB2FBC855C0058EE20 /* RemoteGateDecisionStore.swift in Sources */,
+				3003F3AC2FBC855C0058EE20 /* RemoteGateService.swift in Sources */,
+				3003F3AD2FBC855C0058EE20 /* AppGateRootView.swift in Sources */,
+				3003F3AE2FBC855C0058EE20 /* WebviewVCRepresentable.swift in Sources */,
+				3003F3AF2FBC855C0058EE20 /* WebviewVC.swift in Sources */,
+				3003F3B02FBC855C0058EE20 /* LoadingConfig.swift in Sources */,
+				3003F3B12FBC855C0058EE20 /* URLAppendingUUID.swift in Sources */,
+				3003F3B22FBC855C0058EE20 /* DeviceQueryParameters.swift in Sources */,
 				305A63EC2FB3A9DF00067722 /* AppPrimaryButtonStyle.swift in Sources */,
 				305A63ED2FB3A9DF00067722 /* CultureCartographerView.swift in Sources */,
 				305A63EE2FB3A9DF00067722 /* CultureCartographerViewModel.swift in Sources */,
@@ -532,8 +599,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = 151BorgrulslultroBrenrox/151BorgrulslultroBrenrox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = 151BorgrulslultroBrenrox/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Borgrulslultro Brenrox";
@@ -544,12 +612,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chr.b0rgr8lsl3tr0br3n;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -572,8 +640,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = 151BorgrulslultroBrenrox/151BorgrulslultroBrenrox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = 151BorgrulslultroBrenrox/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Borgrulslultro Brenrox";
@@ -584,12 +653,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chr.b0rgr8lsl3tr0br3n;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -747,6 +816,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3003F3952FBC70490058EE20 /* XCRemoteSwiftPackageReference "OneSignal-iOS-SDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/OneSignal/OneSignal-iOS-SDK.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3003F3962FBC70490058EE20 /* OneSignalFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3003F3952FBC70490058EE20 /* XCRemoteSwiftPackageReference "OneSignal-iOS-SDK" */;
+			productName = OneSignalFramework;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 305A5FED2FB37ABC00067722 /* Project object */;
 }
