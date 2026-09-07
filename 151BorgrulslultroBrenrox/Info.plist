@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>OneSignalAppID</key>
+	<string>ea053d4f-1307-4cf4-9083-a640b6d55814</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -23,7 +25,5 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
-	<key>OneSignalAppID</key>
-	<string>ea053d4f-1307-4cf4-9083-a640b6d55814</string>
 </dict>
 </plist>
