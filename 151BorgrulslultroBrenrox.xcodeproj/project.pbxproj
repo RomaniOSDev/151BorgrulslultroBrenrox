@@ -538,7 +538,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = 151BorgrulslultroBrenrox/151BorgrulslultroBrenrox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = 151BorgrulslultroBrenrox/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Borgrulslultro Brenrox";
@@ -578,7 +578,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = 151BorgrulslultroBrenrox/151BorgrulslultroBrenrox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = 151BorgrulslultroBrenrox/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Borgrulslultro Brenrox";
