@@ -30,14 +30,14 @@ struct CollectionsView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack(spacing: 14) {
-                    Text("Curated decks")
+                    Text("Relic decks")
                         .font(.title2.weight(.bold))
                         .foregroundStyle(Color.appTextPrimary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
 
-                    Text("Unlock additional decks by gathering travel stars across activities. Each deck opens into a scroll of short essays—read slowly, then mark cards viewed to build a personal index.")
+                    Text("Unlock relic essays by earning field marks across Atlas drills. Mark cards viewed to grow your personal index.")
                         .font(.subheadline)
                         .foregroundStyle(Color.appTextSecondary)
                         .frame(maxWidth: .infinity, alignment: .leading)

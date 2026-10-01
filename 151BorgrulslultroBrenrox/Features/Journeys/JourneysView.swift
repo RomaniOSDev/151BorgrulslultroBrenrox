@@ -40,6 +40,10 @@ struct JourneysView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     heroHeader
 
+                    driftRadarCard
+
+                    driftTagRow
+
                     weeklyTrioCard
 
                     quickActionsRow
@@ -75,16 +79,16 @@ struct JourneysView: View {
 
     private var heroHeader: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Journeys log")
+            Text("Drift radar")
                 .font(.title2.weight(.bold))
                 .foregroundStyle(Color.appTextPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
 
-            Text("Track momentum across activities, weekly trio goals, and packing. Use quick actions when you have five minutes between trains.")
+            Text("Tag what pulls you off fieldwork. Peak hours feed a quieter window suggestion for tomorrow’s Brief.")
                 .font(.subheadline)
                 .foregroundStyle(Color.appTextPrimary.opacity(0.92))
-                .lineLimit(6)
+                .lineLimit(5)
                 .minimumScaleFactor(0.7)
                 .fixedSize(horizontal: false, vertical: true)
 
@@ -93,15 +97,15 @@ struct JourneysView: View {
                 spacing: 10
             ) {
                 statTile(
-                    title: "Stars",
-                    value: "\(appState.totalStars)",
-                    icon: "star.fill",
+                    title: "Seal streak",
+                    value: "\(appState.sealStreak)d",
+                    icon: "seal.fill",
                     tint: Color.appAccent
                 )
                 statTile(
-                    title: "Streak",
-                    value: "\(appState.culturalStreak)d",
-                    icon: "flame.fill",
+                    title: "Drifts",
+                    value: "\(appState.driftEvents.count)",
+                    icon: "waveform.path.ecg",
                     tint: Color.appPrimary
                 )
                 statTile(
@@ -111,34 +115,100 @@ struct JourneysView: View {
                     tint: Color.appPrimary.opacity(0.9)
                 )
                 statTile(
-                    title: "Journal",
+                    title: "Notes",
                     value: "\(appState.journalEntries.count)",
                     icon: "square.and.pencil",
                     tint: Color.appAccent.opacity(0.95)
                 )
             }
         }
-        .padding(20)
+        .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color.appPrimary.opacity(0.42),
-                            Color.appAccent.opacity(0.28),
-                            Color.appSurface.opacity(0.55)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .strokeBorder(Color.appTextPrimary.opacity(0.1), lineWidth: 1)
-        )
-        .shadow(color: Color.appTextPrimary.opacity(0.09), radius: 16, x: 0, y: 7)
+        .appDepthSurface(cornerRadius: 22, shadow: .soft)
+    }
+
+    private var driftRadarCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label("Quiet window", systemImage: "moon.stars.fill")
+                .font(.headline.weight(.bold))
+                .foregroundStyle(Color.appTextPrimary)
+            Text(appState.quietWindowLabel)
+                .font(.subheadline)
+                .foregroundStyle(Color.appTextSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+            if let seal = appState.latestFieldSeal {
+                Divider().opacity(0.3)
+                Text("Last seal · day \(seal.dayId)")
+                    .font(.caption.weight(.heavy))
+                    .foregroundStyle(Color.appTextSecondary)
+                    .textCase(.uppercase)
+                if !seal.carriedTitles.isEmpty {
+                    Text(seal.carriedTitles.joined(separator: " · "))
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(Color.appTextPrimary)
+                        .lineLimit(3)
+                }
+                if !seal.residueNote.isEmpty {
+                    Text(seal.residueNote)
+                        .font(.caption)
+                        .foregroundStyle(Color.appTextSecondary)
+                        .lineLimit(3)
+                }
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .appDepthSurface(cornerRadius: 18, shadow: .soft, stroke: Color.appAccent.opacity(0.25))
+    }
+
+    private var driftTagRow: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Log a drift")
+                .font(.caption.weight(.heavy))
+                .foregroundStyle(Color.appTextSecondary)
+                .textCase(.uppercase)
+            LazyVGrid(
+                columns: [GridItem(.flexible(), spacing: 8), GridItem(.flexible(), spacing: 8)],
+                spacing: 8
+            ) {
+                ForEach(DriftKind.allCases) { kind in
+                    Button {
+                        appState.logDrift(kind: kind)
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: kind.symbol)
+                            Text(kind.title)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
+                        }
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(Color.appTextPrimary)
+                        .frame(maxWidth: .infinity)
+                        .frame(minHeight: 44)
+                        .appDepthSurface(cornerRadius: 12, shadow: .soft, stroke: Color.appPrimary.opacity(0.2))
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            if !appState.driftEvents.isEmpty {
+                ForEach(appState.driftEvents.prefix(4)) { event in
+                    HStack {
+                        Image(systemName: event.kind.symbol)
+                            .foregroundStyle(Color.appAccent)
+                        Text(event.kind.title)
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(Color.appTextPrimary)
+                        Spacer()
+                        Text(event.createdAt.formatted(date: .omitted, time: .shortened))
+                            .font(.caption2)
+                            .foregroundStyle(Color.appTextSecondary)
+                    }
+                }
+            }
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .appDepthSurface(cornerRadius: 18, shadow: .soft)
     }
 
     private func statTile(title: String, value: String, icon: String, tint: Color) -> some View {

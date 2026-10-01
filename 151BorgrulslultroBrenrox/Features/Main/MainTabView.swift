@@ -15,19 +15,19 @@ enum MainTab: Int, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .home: return "Home"
-        case .explore: return "Explore"
-        case .collections: return "Collections"
-        case .journeys: return "Journeys"
+        case .home: return "Brief"
+        case .explore: return "Atlas"
+        case .collections: return "Relics"
+        case .journeys: return "Drift"
         }
     }
 
     var systemImage: String {
         switch self {
-        case .home: return "house.fill"
-        case .explore: return "globe.europe.africa.fill"
-        case .collections: return "square.grid.2x2.fill"
-        case .journeys: return "point.topleft.down.curvedto.point.bottomright.up"
+        case .home: return "sun.horizon.fill"
+        case .explore: return "map.fill"
+        case .collections: return "archivebox.fill"
+        case .journeys: return "waveform.path.ecg"
         }
     }
 }

@@ -34,6 +34,54 @@ struct FieldJournalEntry: Codable, Identifiable, Equatable {
     var body: String
 }
 
+enum DriftKind: String, Codable, CaseIterable, Identifiable {
+    case fatigue
+    case noise
+    case contextSwitch
+    case schedule
+    case other
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .fatigue: return "Fatigue"
+        case .noise: return "Noise"
+        case .contextSwitch: return "Context switch"
+        case .schedule: return "Schedule pull"
+        case .other: return "Other"
+        }
+    }
+
+    var symbol: String {
+        switch self {
+        case .fatigue: return "battery.25"
+        case .noise: return "speaker.wave.2.fill"
+        case .contextSwitch: return "arrow.triangle.swap"
+        case .schedule: return "calendar"
+        case .other: return "ellipsis.circle"
+        }
+    }
+}
+
+struct FieldDaySeal: Codable, Equatable {
+    var dayId: Int
+    var carriedTitles: [String]
+    var residueNote: String
+    var sealedAt: Date
+}
+
+struct DriftEvent: Codable, Identifiable, Equatable {
+    var id: UUID
+    var kindRaw: String
+    var note: String
+    var createdAt: Date
+
+    var kind: DriftKind {
+        DriftKind(rawValue: kindRaw) ?? .other
+    }
+}
+
 final class TravelAppState: ObservableObject {
     private let defaults = UserDefaults.standard
 
@@ -61,6 +109,11 @@ final class TravelAppState: ObservableObject {
         static let routeWkHabit = "travel.routeWkHabit"
         static let routeWkStarsClaimed = "travel.routeWkStarsClaimed"
         static let viewedInsightKeys = "travel.viewedInsightKeys"
+        static let fieldDaySeal = "fieldway.daySeal_v1"
+        static let briefReviewedDayId = "fieldway.briefReviewedDayId_v1"
+        static let driftEvents = "fieldway.driftEvents_v1"
+        static let sealStreak = "fieldway.sealStreak_v1"
+        static let lastSealDayId = "fieldway.lastSealDayId_v1"
     }
 
     @Published var hasSeenOnboarding: Bool {
@@ -155,6 +208,26 @@ final class TravelAppState: ObservableObject {
         didSet { persistViewedInsights() }
     }
 
+    @Published var latestFieldSeal: FieldDaySeal? {
+        didSet { persistFieldSeal() }
+    }
+
+    @Published var briefReviewedDayId: Int {
+        didSet { defaults.set(briefReviewedDayId, forKey: Keys.briefReviewedDayId) }
+    }
+
+    @Published var driftEvents: [DriftEvent] {
+        didSet { persistDriftEvents() }
+    }
+
+    @Published var sealStreak: Int {
+        didSet { defaults.set(sealStreak, forKey: Keys.sealStreak) }
+    }
+
+    @Published var lastSealDayId: Int {
+        didSet { defaults.set(lastSealDayId, forKey: Keys.lastSealDayId) }
+    }
+
     init() {
         hasSeenOnboarding = defaults.bool(forKey: Keys.hasSeenOnboarding)
         culturalStreak = defaults.integer(forKey: Keys.culturalStreak)
@@ -204,6 +277,23 @@ final class TravelAppState: ObservableObject {
         }
 
         viewedInsightCardKeys = defaults.stringArray(forKey: Keys.viewedInsightKeys) ?? []
+        briefReviewedDayId = defaults.integer(forKey: Keys.briefReviewedDayId)
+        sealStreak = defaults.integer(forKey: Keys.sealStreak)
+        lastSealDayId = defaults.integer(forKey: Keys.lastSealDayId)
+
+        if let data = defaults.data(forKey: Keys.fieldDaySeal),
+           let decoded = try? JSONDecoder().decode(FieldDaySeal.self, from: data) {
+            latestFieldSeal = decoded
+        } else {
+            latestFieldSeal = nil
+        }
+
+        if let data = defaults.data(forKey: Keys.driftEvents),
+           let decoded = try? JSONDecoder().decode([DriftEvent].self, from: data) {
+            driftEvents = decoded
+        } else {
+            driftEvents = []
+        }
 
         if let data = defaults.data(forKey: Keys.habitItems),
            let decoded = try? JSONDecoder().decode([HabitItem].self, from: data) {
@@ -414,6 +504,147 @@ final class TravelAppState: ObservableObject {
         return (comps.yearForWeekOfYear ?? 0) * 100 + (comps.weekOfYear ?? 0)
     }
 
+    static func dayIdentifier(for date: Date) -> Int {
+        let comps = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        return (comps.year ?? 0) * 10_000 + (comps.month ?? 0) * 100 + (comps.day ?? 0)
+    }
+
+    var todayDayId: Int { Self.dayIdentifier(for: Date()) }
+
+    var isTodaySealed: Bool {
+        latestFieldSeal?.dayId == todayDayId
+    }
+
+    var needsMorningBrief: Bool {
+        !activeBriefTitles.isEmpty && briefReviewedDayId != todayDayId
+    }
+
+    var activeBriefTitles: [String] {
+        guard let seal = latestFieldSeal, seal.dayId < todayDayId else { return [] }
+        return seal.carriedTitles
+    }
+
+    func markMorningBriefReviewed() {
+        briefReviewedDayId = todayDayId
+    }
+
+    func sealFieldDay(carriedTitles: [String], residueNote: String) {
+        let trimmed = carriedTitles
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        let capped = Array(trimmed.prefix(3))
+        let residue = residueNote.trimmingCharacters(in: .whitespacesAndNewlines)
+        let day = todayDayId
+        let previousLast = lastSealDayId
+        latestFieldSeal = FieldDaySeal(
+            dayId: day,
+            carriedTitles: capped,
+            residueNote: residue,
+            sealedAt: Date()
+        )
+        if previousLast == 0 {
+            sealStreak = 1
+        } else if day == previousLast {
+            // already sealed today — keep streak
+        } else if day - previousLast == 1 || isConsecutiveCalendarDay(previous: previousLast, current: day) {
+            sealStreak = min(sealStreak + 1, 99)
+        } else {
+            sealStreak = 1
+        }
+        lastSealDayId = day
+        culturalStreak = max(culturalStreak, sealStreak)
+        addStars(1)
+        appendSession(
+            LoggedSessionEntry(
+                id: UUID(),
+                activityKind: "field_seal",
+                detailTitle: capped.isEmpty ? "Day sealed" : "Sealed \(capped.count) waymark(s)",
+                starsEarned: 1,
+                completedAt: Date()
+            )
+        )
+        refreshAchievementsAndCollections()
+    }
+
+    private func isConsecutiveCalendarDay(previous: Int, current: Int) -> Bool {
+        let prevDate = dateFromDayId(previous)
+        let currDate = dateFromDayId(current)
+        guard let prevDate, let currDate else { return false }
+        let gap = Calendar.current.dateComponents([.day], from: prevDate, to: currDate).day ?? 0
+        return gap == 1
+    }
+
+    private func dateFromDayId(_ dayId: Int) -> Date? {
+        var comps = DateComponents()
+        comps.year = dayId / 10_000
+        comps.month = (dayId / 100) % 100
+        comps.day = dayId % 100
+        return Calendar.current.date(from: comps)
+    }
+
+    func logDrift(kind: DriftKind, note: String = "") {
+        let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
+        var next = [
+            DriftEvent(
+                id: UUID(),
+                kindRaw: kind.rawValue,
+                note: trimmed,
+                createdAt: Date()
+            )
+        ] + driftEvents
+        if next.count > 40 {
+            next = Array(next.prefix(40))
+        }
+        driftEvents = next
+    }
+
+    var driftPeakHour: Int? {
+        guard !driftEvents.isEmpty else { return nil }
+        var buckets = Array(repeating: 0, count: 24)
+        for event in driftEvents {
+            let hour = Calendar.current.component(.hour, from: event.createdAt)
+            buckets[hour] += 1
+        }
+        guard let maxVal = buckets.max(), maxVal > 0 else { return nil }
+        return buckets.firstIndex(of: maxVal)
+    }
+
+    var quietWindowLabel: String {
+        guard let peak = driftPeakHour else {
+            return "Tag drifts to reveal a quieter fieldwork window."
+        }
+        let quiet = (peak + 4) % 24
+        return String(format: "Peak drift ~%02d:00 · try quiet block near %02d:00", peak, quiet)
+    }
+
+    var sealCandidateTitles: [String] {
+        var titles: [String] = []
+        for entry in sessionLog.prefix(8) {
+            let label = "\(friendlyActivityTitle(entry.activityKind)): \(entry.detailTitle)"
+            if titles.contains(label) == false {
+                titles.append(label)
+            }
+        }
+        for note in journalEntries.prefix(4) {
+            let snippet = String(note.body.prefix(42))
+            let label = "Note: \(snippet)"
+            if titles.contains(label) == false {
+                titles.append(label)
+            }
+        }
+        return Array(titles.prefix(8))
+    }
+
+    private func friendlyActivityTitle(_ kind: String) -> String {
+        switch kind {
+        case "cartographer": return "Atlas"
+        case "silhouette": return "Lattice"
+        case "habit": return "Cadence"
+        case "field_seal": return "Seal"
+        default: return kind.replacingOccurrences(of: "_", with: " ").capitalized
+        }
+    }
+
     func insightStorageKey(deck: Int, cardId: String) -> String {
         "\(deck)::\(cardId)"
     }
@@ -544,7 +775,12 @@ final class TravelAppState: ObservableObject {
             Keys.routeWkSil,
             Keys.routeWkHabit,
             Keys.routeWkStarsClaimed,
-            Keys.viewedInsightKeys
+            Keys.viewedInsightKeys,
+            Keys.fieldDaySeal,
+            Keys.briefReviewedDayId,
+            Keys.driftEvents,
+            Keys.sealStreak,
+            Keys.lastSealDayId
         ].forEach { defaults.removeObject(forKey: $0) }
 
         hasSeenOnboarding = false
@@ -571,11 +807,18 @@ final class TravelAppState: ObservableObject {
         routeWkHabit = false
         routeWkStarsClaimed = false
         viewedInsightCardKeys = []
+        latestFieldSeal = nil
+        briefReviewedDayId = 0
+        driftEvents = []
+        sealStreak = 0
+        lastSealDayId = 0
         persistHabits()
         persistPacking()
         persistSessions()
         persistJournal()
         persistViewedInsights()
+        persistFieldSeal()
+        persistDriftEvents()
         NotificationCenter.default.post(name: .travelAppStateDidReset, object: nil)
         objectWillChange.send()
     }
@@ -608,6 +851,21 @@ final class TravelAppState: ObservableObject {
         defaults.set(viewedInsightCardKeys, forKey: Keys.viewedInsightKeys)
     }
 
+    private func persistFieldSeal() {
+        if let latestFieldSeal,
+           let data = try? JSONEncoder().encode(latestFieldSeal) {
+            defaults.set(data, forKey: Keys.fieldDaySeal)
+        } else {
+            defaults.removeObject(forKey: Keys.fieldDaySeal)
+        }
+    }
+
+    private func persistDriftEvents() {
+        if let data = try? JSONEncoder().encode(driftEvents) {
+            defaults.set(data, forKey: Keys.driftEvents)
+        }
+    }
+
     private func refreshAchievementsAndCollections() {
         var next = Set(activeAchievements)
         if culturalStreak >= 3 { next.insert("steady_explorer") }
@@ -615,6 +873,8 @@ final class TravelAppState: ObservableObject {
         if cartographerStagesCleared >= 3 { next.insert("pathfinder") }
         if silhouetteStagesCleared >= 2 { next.insert("story_seeker") }
         if mappedLocations >= 8 { next.insert("atlas_touch") }
+        if sealStreak >= 3 { next.insert("field_seal_cadence") }
+        if driftEvents.count >= 5 { next.insert("drift_mapper") }
         activeAchievements = Array(next).sorted()
 
         var mask = 1

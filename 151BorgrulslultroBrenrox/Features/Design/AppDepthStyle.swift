@@ -67,9 +67,19 @@ enum AppDepthStyle {
 }
 
 extension View {
-    /// Full-screen subtle gradient behind scroll content.
+    /// Full-screen subtle gradient behind scroll content, with Fieldway atmosphere.
     func appDepthScrollBackdrop() -> some View {
-        background(AppDepthStyle.screenBackdrop)
+        background {
+            ZStack {
+                AppDepthStyle.screenBackdrop
+                Image("FieldwayBackdrop")
+                    .resizable()
+                    .scaledToFill()
+                    .opacity(0.18)
+                    .allowsHitTesting(false)
+            }
+            .ignoresSafeArea()
+        }
     }
 
     /// Standard elevated card: gradient fill + stroke + optional shadow.

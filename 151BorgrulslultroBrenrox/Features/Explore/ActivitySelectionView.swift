@@ -39,7 +39,7 @@ struct ActivitySelectionView: View {
                 WeeklyProgressSection()
 
                 HStack(alignment: .center, spacing: 12) {
-                    Text("Studios")
+                    Text("Atlas drills")
                         .font(.title2.weight(.bold))
                         .foregroundStyle(Color.appTextPrimary)
                     Spacer(minLength: 0)
@@ -57,7 +57,7 @@ struct ActivitySelectionView: View {
                     .opacity(0.85)
                 }
 
-                Text("Pick a lane, open a studio.")
+                Text("Open a lane, run a drill, feed tonight’s seal.")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(Color.appTextSecondary)
                     .lineLimit(1)

@@ -56,9 +56,9 @@ struct OnboardingView: View {
             copyCard(
                 step: 1,
                 total: 3,
-                symbol: "point.topleft.down.curvedto.point.bottomright.up",
-                title: "Chart living layers",
-                caption: "Skylines, markets, and paths stack into a personal atlas—short sessions, clear depth."
+                symbol: "sun.horizon.fill",
+                title: "Start with the Brief",
+                caption: "Fieldway opens on a morning desk—carry yesterday’s sealed waymarks before you drill."
             )
 
             Spacer(minLength: 12)
@@ -142,8 +142,8 @@ struct OnboardingView: View {
                 step: 2,
                 total: 3,
                 symbol: "map.fill",
-                title: "Follow hidden threads",
-                caption: "Lattice stories and weekly habits snap into one rhythm—Home keeps the pulse visible."
+                title: "Drill Atlas & Lattice",
+                caption: "Map stages and silhouette stories feed the same fieldwork day—then log what pulled you off."
             )
 
             Spacer(minLength: 12)
@@ -269,9 +269,9 @@ struct OnboardingView: View {
             copyCard(
                 step: 3,
                 total: 3,
-                symbol: "sparkles",
-                title: "Open your studio",
-                caption: "Home for momentum, Explore for the three labs—tap Continue and start in one flow."
+                symbol: "seal.fill",
+                title: "Seal the field day",
+                caption: "Pick up to three findings, leave a residue note, and tomorrow’s Brief brings them back."
             )
 
             Spacer(minLength: 12)
